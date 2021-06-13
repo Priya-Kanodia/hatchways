@@ -25,10 +25,11 @@ SECRET_KEY = 'django-insecure-n+ao%ijm0ss=r)mec__(ncum4$g$9ooc+s68)$5s$&)e82$kiz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
+SESSION_SECRET = "my secret key"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -44,11 +45,11 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# 'django.middleware.csrf.CsrfViewMiddleware',
 
 ROOT_URLCONF = 'messenger_backend.urls'
 

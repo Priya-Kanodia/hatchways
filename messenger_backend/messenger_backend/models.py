@@ -17,8 +17,8 @@ class app_user(models.Model):
 
     def encrypt_password(self, plain_password, salt):
         hash_creator = hashlib.sha256()
-        hash_creator.update(plain_password)
-        hash_creator.update(salt)
+        hash_creator.update(plain_password.encode('utf-8'))
+        hash_creator.update(salt.encode('utf-8'))
         return hash_creator.hexdigest()
 
 
@@ -31,10 +31,17 @@ class app_user(models.Model):
         return False
 
     def set_salt_and_password(self):
-        self.salt = self.create_salt()
-        self.password = self.encrypt_password(self.password.encode('utf-8'),self.salt)
+        self.salt = self.create_salt().decode("utf-8")
+        self.password = self.encrypt_password(self.password,self.salt)
 
 
     def save(self, *args, **kwargs):
         self.set_salt_and_password()
         super(app_user, self).save(*args, **kwargs)
+
+    def verify_password(self,password):
+        print(self.encrypt_password(password, self.salt))
+        if self.encrypt_password(password, self.salt) == self.password:
+            return True
+        else:
+            return False
