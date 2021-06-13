@@ -135,4 +135,4 @@ dmypy.json
 *.idea/
 *.lock
 .DS_Store
-
+messenger_backend/messenger_backend/*.pyc
