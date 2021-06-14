@@ -2,13 +2,15 @@ import json
 
 import jwt
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from django.core import serializers
 
 from messenger_backend.models import app_user
 from messenger_backend.settings import SESSION_SECRET
+from django.utils.decorators import method_decorator
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class Login(APIView):
     def post(self,request):
         body = request.data

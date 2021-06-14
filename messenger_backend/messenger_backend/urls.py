@@ -21,5 +21,5 @@ from messenger_backend import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/login',views.Login.as_view()),
-    url(r'', include('socketio_app.urls')),
+    # url(r'', include('socketio_app.urls')),
 ]

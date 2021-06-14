@@ -81,3 +81,8 @@ def connect(sid, environ):
 def disconnect(sid):
     print('Client disconnected')
 
+
+
+@sio.event
+def go_online(sid, xyz):
+    print("i am here ..........")
