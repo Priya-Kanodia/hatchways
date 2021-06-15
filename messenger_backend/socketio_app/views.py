@@ -76,7 +76,6 @@ def disconnect_request(sid):
 @sio.event
 def connect(sid, environ):
     print("my i am here")
-    print(environ)
     sio.emit('my_response', {'data': 'Connected', 'count': 0}, room=sid)
 
 
