@@ -34,4 +34,5 @@ class Login(APIView):
         user_dict = json.loads(user_json)
         user_res = user_dict[0]["fields"]
         user_res["token"] = token
+        user_res["id"] = user.id
         return JsonResponse(user_res, status=200)

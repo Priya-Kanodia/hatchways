@@ -16,6 +16,7 @@ thread = None
 def index(request):
     global thread
     if thread is None:
+
         thread = sio.start_background_task(background_thread)
     return HttpResponse(open(os.path.join(basedir, 'static/index.html')))
 
@@ -74,6 +75,8 @@ def disconnect_request(sid):
 
 @sio.event
 def connect(sid, environ):
+    print("my i am here")
+    print(environ)
     sio.emit('my_response', {'data': 'Connected', 'count': 0}, room=sid)
 
 
@@ -83,6 +86,8 @@ def disconnect(sid):
 
 
 
-@sio.event
+@sio.on("go-online")
 def go_online(sid, xyz):
     print("i am here ..........")
+    print(xyz)
+    sio.emit('add-online-user',xyz, broadcast=True, include_self=False)
