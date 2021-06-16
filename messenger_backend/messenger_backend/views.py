@@ -1,6 +1,7 @@
 import json
 import jwt
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from django.core import serializers
 from django.db.models import Q
@@ -9,6 +10,10 @@ from django.db.models import Prefetch
 from messenger_backend.models import app_user, Conversations, Message
 from messenger_backend.settings import SESSION_SECRET
 from messenger_backend.online_users import online_users
+
+from django.utils.decorators import method_decorator
+
+@method_decorator(csrf_exempt, name='dispatch')
 
 class Login(APIView):
     def post(self,request):
@@ -36,6 +41,7 @@ class Login(APIView):
         user_dict = json.loads(user_json)
         user_res = user_dict[0]["fields"]
         user_res["token"] = token
+        user_res["id"] = user.id
         return JsonResponse(user_res, status=200)
 
 class Register(APIView):

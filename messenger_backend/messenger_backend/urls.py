@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from messenger_backend import views
 
 urlpatterns = [
@@ -25,4 +26,6 @@ urlpatterns = [
     path('auth/user',views.User.as_view()),
     path('api/',views.Conversation.as_view()),
     path('api/:username',views.Username.as_view())
+    # url(r'', include('socketio_app.urls')),
+
 ]

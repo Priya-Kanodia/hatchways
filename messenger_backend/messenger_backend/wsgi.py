@@ -14,3 +14,13 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'messenger_backend.settings')
 
 application = get_wsgi_application()
+
+from socketio_app.views import sio
+import socketio
+
+application = socketio.WSGIApp(sio, application)
+
+import eventlet
+import eventlet.wsgi
+
+eventlet.wsgi.server(eventlet.listen(('', 8000)), application)

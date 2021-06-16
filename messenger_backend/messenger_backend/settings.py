@@ -38,17 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'messenger_backend'
+    'messenger_backend',
+    'socketio_app'
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'messenger_backend.middleware.middleware.SimpleMiddleware'
+
 ]
 # 'django.middleware.csrf.CsrfViewMiddleware',
 
@@ -76,6 +78,15 @@ WSGI_APPLICATION = 'messenger_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'messenger',
+#         'USER': 'dev_db',
+#         'PASSWORD': 'test@123',
+#         'HOST': 'localhost',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -85,7 +96,6 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
-
 
 
 # Password validation
