@@ -16,7 +16,6 @@ thread = None
 def index(request):
     global thread
     if thread is None:
-
         thread = sio.start_background_task(background_thread)
     return HttpResponse(open(os.path.join(basedir, 'static/index.html')))
 

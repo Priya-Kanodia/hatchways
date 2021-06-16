@@ -76,16 +76,24 @@ WSGI_APPLICATION = 'messenger_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'messenger',
+#         'USER': 'dev_db',
+#         'PASSWORD': 'test@123',
+#         'HOST': 'localhost',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'messenger',
-        'USER': 'dev_db',
-        'PASSWORD': 'test@123',
+        'USER': 'postgres',
+        'PASSWORD': 'Priya@0524',
         'HOST': 'localhost',
     }
 }
-
 
 
 # Password validation
