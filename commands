@@ -1,0 +1,7 @@
+from messenger_backend.models import * 
+app_user = app_user()
+app_user.username = "deenbandhu3"
+app_user.email = "deenbandh3u@gmail.com"
+app_user.password = "123456"
+app_user.photo_url = "some_link"
+app_user.save()
