@@ -2,6 +2,7 @@ from django.db import models
 import os
 import base64
 import hashlib
+from django.db.models import Q
 
 class app_user(models.Model):
     username = models.CharField(max_length=200,null=False,unique=True)
@@ -9,7 +10,8 @@ class app_user(models.Model):
     photoUrl = models.CharField(max_length=200)
     password = models.CharField(max_length=200,null=False)
     salt = models.CharField(max_length=80,)
-
+    created_at= models.DateTimeField(auto_now_add=True)
+    is_active= models.BooleanField()
 
     def create_salt(self):
         result = os.urandom(16)
@@ -20,7 +22,6 @@ class app_user(models.Model):
         hash_creator.update(plain_password.encode('utf-8'))
         hash_creator.update(salt.encode('utf-8'))
         return hash_creator.hexdigest()
-
 
     def is_password_changed(self):
         old_user = app_user.objects.filter(username=self.username)
@@ -34,7 +35,6 @@ class app_user(models.Model):
         self.salt = self.create_salt().decode("utf-8")
         self.password = self.encrypt_password(self.password,self.salt)
 
-
     def save(self, *args, **kwargs):
         self.set_salt_and_password()
         super(app_user, self).save(*args, **kwargs)
@@ -45,3 +45,21 @@ class app_user(models.Model):
             return True
         else:
             return False
+
+class Conversations(models.Model):
+    user1_id=models.ForeignKey(app_user,on_delete=models.CASCADE, related_name='user1_id')
+    user2_id=models.ForeignKey(app_user,on_delete=models.CASCADE, related_name='user2_id')
+    created_at= models.DateTimeField(auto_now_add=True)
+
+    # find conversation given two user Ids
+    def find_conversation(user1Id,user2Id):
+        conversation= Conversations.objects.filter((Q(user1_id=user1Id) | Q(user1_id=user2Id))
+                                     , (Q(user2_id=user1Id) | Q(user2_id=user2Id)))
+        # return conversation or null if it doesn't exist
+        return conversation
+
+class Message(models.Model):
+    text = models.CharField(max_length=1000,null=False)
+    sender_id= models.IntegerField(null=False)
+    conversation_id= models.ForeignKey(Conversations,on_delete=models.CASCADE, related_name='conversation_id')
+    created_at= models.DateTimeField(auto_now_add=True)

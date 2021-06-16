@@ -1,5 +1,10 @@
+To populate the data
+    python manage.py shell
+    from messenger_backend.seed import seed
+    seed()
+
 To start the project please run
 
-python manage.py runserver 
+    python manage.py runserver 
 
 

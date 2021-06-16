@@ -21,5 +21,11 @@ from messenger_backend import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/login',views.Login.as_view()),
+    path('auth/register',views.Register.as_view()),
+    path('auth/logout',views.LogOut.as_view()),
+    path('auth/user',views.User.as_view()),
+    path('api/',views.Conversation.as_view()),
+    path('api/:username',views.Username.as_view())
     # url(r'', include('socketio_app.urls')),
+
 ]
