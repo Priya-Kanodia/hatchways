@@ -11,6 +11,7 @@ class app_user(models.Model):
     password = models.CharField(max_length=200,null=False)
     salt = models.CharField(max_length=80,)
     created_at= models.DateTimeField(auto_now_add=True)
+    is_active= models.BooleanField()
 
     def create_salt(self):
         result = os.urandom(16)
