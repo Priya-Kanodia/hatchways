@@ -8,6 +8,11 @@ import os
 from django.http import HttpResponse
 import socketio
 
+import sys
+sys.path.insert(1, 'H:\hatchways\hatchways\messenger_backend\messenger_backend')
+import online_users
+# from hatchways.hatchways.messenger_backend.messenger_backend import online_users
+
 basedir = os.path.dirname(os.path.realpath(__file__))
 sio = socketio.Server(async_mode=async_mode)
 thread = None
@@ -86,6 +91,19 @@ def disconnect(sid):
 
 @sio.on("go-online")
 def go_online(sid, xyz):
+    if xyz not in online_users:
+        online_users.online_users.append(xyz)
     print("i am here ..........")
     print(xyz)
     sio.emit('add-online-user',xyz, broadcast=True, include_self=False)
+
+@sio.on("new-message")
+def new_message(sid,message):
+    sio.emit('add-online-user',{'message': message.message,'sender': message.sender,}, broadcast=True, include_self=False)
+
+
+@sio.on("logout")
+def logout(sid, xyz):
+    if xyz not in online_users:
+        online_users.online_users.remove(xyz)
+    sio.emit('remove-offline-user',xyz, broadcast=True, include_self=False)

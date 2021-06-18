@@ -1,56 +1,57 @@
 from django.db import migrations
-from messenger_backend.models import app_user, Conversations, Message
+from messenger_backend.models import app_user, Conversations, Messages
+
 
 def seed():
     print("db synced!")
     app_user.objects.all().delete()
     Conversations.objects.all().delete()
-    Message.objects.all().delete()
+    Messages.objects.all().delete()
 
     thomas= app_user(
-        username = "santiago",
-        email =  "santiago@email.com",
+        username = "thomas",
+        email =  "thomas@email.com",
         password=  "123456",
-        photoUrl= 
-        "https://res.cloudinary.com/dmlvthmqr/image/upload/v1607914466/messenger/775db5e79c5294846949f1f55059b53317f51e30_s3back.png",   
+        photoUrl=  "https://res.cloudinary.com/dmlvthmqr/image/upload/v1607914467/messenger/thomas_kwzerk.png",
     )
+        
     thomas.save()
 
     santiago= app_user(
-        username= "thomas",
-        email= "thomas@email.com",
+        username= "santiago",
+        email= "santiago@email.com",
         password= "123456",
-        photoUrl=
-            "https://res.cloudinary.com/dmlvthmqr/image/upload/v1607914467/messenger/thomas_kwzerk.png",
+        photoUrl="https://res.cloudinary.com/dmlvthmqr/image/upload/v1607914466/messenger/775db5e79c5294846949f1f55059b53317f51e30_s3back.png",   
     )
+    
     santiago.save()
 
     santiagoConvo= Conversations(
-        user1_id= thomas,
-        user2_id = santiago
+        user1Id= thomas,
+        user2Id = santiago
     )
     santiagoConvo.save()
 
-    message= Message(
-        conversation_id=santiagoConvo,
-        sender_id= santiago.id,
+    messages= Messages(
+        conversationId=santiagoConvo,
+        senderId= santiago.id,
         text= "Where are you from?"
     )
-    message.save()
+    messages.save()
 
-    message= Message(
-        conversation_id=santiagoConvo,
-        sender_id= thomas.id,
+    messages= Messages(
+        conversationId=santiagoConvo,
+        senderId= thomas.id,
         text= "I'm from New York"
     )
-    message.save()
+    messages.save()
 
-    message= Message(
-        conversation_id=santiagoConvo,
-        sender_id= santiago.id,
+    messages= Messages(
+        conversationId=santiagoConvo,
+        senderId= santiago.id,
         text= "Share photo of your city, please"
     )
-    message.save()
+    messages.save()
 
     chiumbo= app_user(
         username= "chiumbo",
@@ -62,17 +63,17 @@ def seed():
     chiumbo.save()
 
     chiumboConvo= Conversations(
-        user1_id= chiumbo,
-        user2_id= thomas
+        user1Id= chiumbo,
+        user2Id= thomas
     )
     chiumboConvo.save()
 
-    message= Message(
-        conversation_id=chiumboConvo,
-        sender_id= chiumbo.id,
+    messages= Messages(
+        conversationId=chiumboConvo,
+        senderId= chiumbo.id,
         text= "Sure! What time?"
     )
-    message.save()
+    messages.save()
 
     hualing= app_user(
         username= "hualing",
@@ -84,25 +85,25 @@ def seed():
     hualing.save()
 
     hualingConvo = Conversations(
-        user1_id= hualing,
-        user2_id= thomas
+        user1Id= hualing,
+        user2Id= thomas
     )
     hualingConvo.save()
 
     for i in range(10):
-        message= Message(
-            conversation_id=hualingConvo,
-            sender_id= hualing.id,
-            text= "a test message"
+        messages= Messages(
+            conversationId=hualingConvo,
+            senderId= hualing.id,
+            text= "a test Messages"
         )
-        message.save()
+        messages.save()
 
-    message= Message(
-            conversation_id=hualingConvo,
-            sender_id= hualing.id,
+    messages= Messages(
+            conversationId=hualingConvo,
+            senderId= hualing.id,
             text= "😂 😂 😂"
         )
-    message.save()
+    messages.save()
 
     user=app_user(
       username= "ashanti",
@@ -132,15 +133,15 @@ def seed():
     )
     user.save()
 
-    print('seeded users and messages')
+    print('seeded users and Messagess')
 
 print("Seeding...")
-class Migration(migrations.Migration):
+# class Migration(migrations.Migration):
 
-    dependencies = []
+#     dependencies = []
 
-    operations = [
-        migrations.RunPython(seed)
-    ]
+#     operations = [
+#         migrations.RunPython(seed)
+#     ]
 
     

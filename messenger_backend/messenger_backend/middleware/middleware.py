@@ -12,16 +12,16 @@ class SimpleMiddleware:
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
-
-        token = request.headers.get("x-access-token")
-
-        if token:
-            decoded= jwt.decode(token, SESSION_SECRET, algorithms=["HS256"])
-            print(decoded)
-            user = app_user.objects.filter(id=decoded['id'])
-            print("VERIFIED**")
-            if len(user)>0:
-                request.user= user.first()
+        try:
+            token = request.headers.get("x-access-token")
+            if token:
+                decoded= jwt.decode(token, SESSION_SECRET, algorithms=["HS256"])
+                user = app_user.objects.filter(id=decoded['id'])
+                if len(user)>0:
+                    request._cached_user= user.first()
+                    request.user= user.first()
+        except:
+            print("something's wrong")
 
         response = self.get_response(request)
 

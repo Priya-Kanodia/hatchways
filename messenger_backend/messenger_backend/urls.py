@@ -24,8 +24,9 @@ urlpatterns = [
     path('auth/register',views.Register.as_view()),
     path('auth/logout',views.LogOut.as_view()),
     path('auth/user',views.User.as_view()),
-    path('api/',views.Conversation.as_view()),
-    path('api/:username',views.Username.as_view())
+    path('api/conversations',views.Conversation.as_view()),
+    path('api/messages',views.Message.as_view()),
+    path('api/users/:username',views.Username.as_view())
     # url(r'', include('socketio_app.urls')),
 
 ]

@@ -1,4 +1,18 @@
-To populate the data
+## Running Application Locally
+
+```
+    psql
+    CREATE  DATABASE messenger;
+    \q
+
+    cd hatchways\messenger_backend
+    pip install -r requirement.txt
+
+    python manage.py makemigrations
+    python manage.py migrate
+
+seed the DATABASE\\
+
     python manage.py shell
     from messenger_backend.seed import seed
     seed()

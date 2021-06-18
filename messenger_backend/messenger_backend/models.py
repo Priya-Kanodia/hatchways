@@ -11,7 +11,8 @@ class app_user(models.Model):
     password = models.CharField(max_length=200,null=False)
     salt = models.CharField(max_length=80,)
     created_at= models.DateTimeField(auto_now_add=True)
-    is_active= models.BooleanField()
+    is_active= models.BooleanField(default=0)
+    online= models.BooleanField(default=0)
 
     def create_salt(self):
         result = os.urandom(16)
@@ -47,19 +48,19 @@ class app_user(models.Model):
             return False
 
 class Conversations(models.Model):
-    user1_id=models.ForeignKey(app_user,on_delete=models.CASCADE, related_name='user1_id')
-    user2_id=models.ForeignKey(app_user,on_delete=models.CASCADE, related_name='user2_id')
+    user1Id=models.ForeignKey(app_user,on_delete=models.CASCADE, related_name='user1Id')
+    user2Id=models.ForeignKey(app_user,on_delete=models.CASCADE, related_name='user2Id')
     created_at= models.DateTimeField(auto_now_add=True)
 
     # find conversation given two user Ids
     def find_conversation(user1Id,user2Id):
-        conversation= Conversations.objects.filter((Q(user1_id=user1Id) | Q(user1_id=user2Id))
-                                     , (Q(user2_id=user1Id) | Q(user2_id=user2Id)))
+        conversation= Conversations.objects.filter((Q(user1Id=user1Id) | Q(user1Id=user2Id))
+                                     , (Q(user2Id=user1Id) | Q(user2Id=user2Id)))
         # return conversation or null if it doesn't exist
         return conversation
 
-class Message(models.Model):
+class Messages(models.Model):
     text = models.CharField(max_length=1000,null=False)
-    sender_id= models.IntegerField(null=False)
-    conversation_id= models.ForeignKey(Conversations,on_delete=models.CASCADE, related_name='conversation_id')
-    created_at= models.DateTimeField(auto_now_add=True)
+    senderId= models.IntegerField(null=False)
+    conversationId= models.ForeignKey(Conversations,on_delete=models.CASCADE, related_name='conversationId')
+    createdAt= models.DateTimeField(auto_now_add=True)
