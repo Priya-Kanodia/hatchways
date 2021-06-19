@@ -72,6 +72,10 @@ class LogOut(APIView):
 class User(APIView):
     def get(self, request):
         try:
+            token = request.headers.get("x-access-token")
+            if token:
+                    decoded= jwt.decode(token, SESSION_SECRET, algorithms=["HS256"])
+                    user = app_user.objects.filter(id=decoded['id']).first()
             body= request.user
             if body:
                 return JsonResponse(body)
