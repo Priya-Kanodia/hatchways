@@ -74,11 +74,10 @@ class User(APIView):
         try:
             token = request.headers.get("x-access-token")
             if token:
-                    decoded= jwt.decode(token, SESSION_SECRET, algorithms=["HS256"])
-                    user = app_user.objects.filter(id=decoded['id']).first()
-            body= request.user
-            if body:
-                return JsonResponse(body)
+                decoded = jwt.decode(token, SESSION_SECRET, algorithms=["HS256"])
+                user = app_user.objects.filter(id=decoded['id']).values().first()
+            if user:
+                return JsonResponse(user)
             else:
                 return JsonResponse({})
         except:
