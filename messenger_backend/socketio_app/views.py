@@ -91,7 +91,7 @@ def disconnect(sid):
 
 @sio.on("go-online")
 def go_online(sid, xyz):
-    if xyz not in online_users:
+    if xyz not in online_users.online_users:
         online_users.online_users.append(xyz)
     print("i am here ..........")
     print(xyz)
@@ -104,6 +104,6 @@ def new_message(sid,message):
 
 @sio.on("logout")
 def logout(sid, xyz):
-    if xyz not in online_users:
+    if xyz not in online_users.online_users:
         online_users.online_users.remove(xyz)
     sio.emit('remove-offline-user',xyz, broadcast=True, include_self=False)
